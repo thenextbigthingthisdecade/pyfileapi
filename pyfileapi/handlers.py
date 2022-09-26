@@ -1,10 +1,26 @@
 from __future__ import annotations
 
 import os
+import re
 from typing import Any
-from typing import TextIO
+
+from utils.find_match_helpers import get_match_tuple
+from utils.find_match_helpers import MatchTuple
+
+FilePath = str | bytes | os.PathLike[Any]
 
 
-def read_file(file: str | bytes | os.PathLike[Any]) -> TextIO:
-    f = open(file=file)
-    return f
+def find_match(
+    file: FilePath, search_string: str, all_matches: bool = False,
+) -> list[MatchTuple] | MatchTuple:
+    if not search_string:
+        raise Exception('find_match() requires search_string to be non empty')
+    with open(file=file) as f:
+        text = f.read()
+        matches = [
+            get_match_tuple(text, m)
+            for m in re.finditer(search_string, text)
+        ]
+        if not all_matches and matches != []:
+            return matches[0]
+        return matches

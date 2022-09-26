@@ -1,9 +1,25 @@
 from __future__ import annotations
 
-from pyfileapi import handlers
+from pyfileapi.handlers import find_match
 
 
-def test_read_file_handler_can_open_existing_file() -> None:
-    f = handlers.read_file('handlers_test.py')
-    assert f is not None
-    assert f.readline().startswith('from')
+def test_match_handler_returns_single_match() -> None:
+    res = find_match(file='handlers_test.py', search_string='pyfileapi')
+    assert res is not None
+    text, line, (start, end) = res
+    assert text == 'pyfileapi'
+    assert line == 3
+    assert start, end == (5, 12)
+
+
+def test_match_handler_returns_all_matches_with_all_matches_true() -> None:
+    res = find_match(
+        file='handlers_test.py',
+        search_string='pyfileapi', all_matches=True,
+    )
+    assert res is not None
+    assert len(res) == 1
+    text, line, (start, end) = res
+    assert text == 'pyfileapi'
+    assert line == 3
+    assert start, end == (5, 12)
