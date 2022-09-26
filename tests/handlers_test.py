@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import cast
 
-from pyfileapi.find_match_helpers import MatchTuple
-from pyfileapi.handlers import find_match
+from pyfileapi.search import find_match
+from pyfileapi.search_helpers import MatchTuple
 
 
 def test_match_handler_returns_single_match() -> None:

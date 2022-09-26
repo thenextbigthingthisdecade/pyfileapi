@@ -4,8 +4,8 @@ import os
 import re
 from typing import Any
 
-from pyfileapi.find_match_helpers import get_match_tuple
-from pyfileapi.find_match_helpers import MatchTuple
+from pyfileapi.search_helpers import get_match_tuple
+from pyfileapi.search_helpers import MatchTuple
 
 FilePath = str | bytes | os.PathLike[Any]
 
